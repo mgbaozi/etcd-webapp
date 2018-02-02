@@ -1,19 +1,24 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import AppNav from './components/AppNav'
+import KeyValue from './containers/KeyValue'
+import './App.css'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to ETCD</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+      <Router>
+        <div className="app">
+          <AppNav />
+          <div className="container">
+            <Route exact path="/" component={null}/>
+            <Route exact path="/kv" component={KeyValue}/>
+            <Route exact path="/member" component={null}/>
+          </div>
+        </div>
+      </Router>
+    )
   }
 }
 
-export default App;
+export default App
