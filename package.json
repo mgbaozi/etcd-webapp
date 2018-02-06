@@ -5,7 +5,7 @@
   "repository": "https://github.com/mgbaozi/etcd-webapp",
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "immutable": "^3.8.2",
+    "immer": "^1.0.1",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.2.0",
@@ -15,7 +15,6 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.0",
     "redux": "^3.7.2",
-    "redux-immutablejs": "^0.0.8",
     "redux-saga": "^0.16.0"
   },
   "scripts": {
@@ -23,5 +22,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "proxy": "http://localhost:2379"
 }

@@ -1,11 +1,16 @@
-import Immutable from 'immutable'
-import { createReducer } from 'redux-immutablejs'
+import produce from 'immer'
+import * as actions from '../actions'
 
-import * as ActionTypes from '../actions'
+const initialState = {
+  kvs: [],
+}
 
-export default createReducer(Immutable.fromJS([]), {
-  [ActionTypes.KEYS.SUCCESS](state, action) {
-    const keys = action.response
-    return Immutable.fromJS(keys)
-  },
-})
+const reducer = (state = initialState, action) =>
+  produce(state, draft => {
+    switch(action.type) {
+      case actions.KEYS.SUCCESS:
+        draft.kvs = action.response.kvs
+    }
+  })
+
+export default reducer
