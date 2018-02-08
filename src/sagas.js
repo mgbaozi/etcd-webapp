@@ -1,4 +1,4 @@
-import { all, call, put, fork, take, takeEvery } from 'redux-saga/effects'
+import { all, call, put, fork, takeEvery } from 'redux-saga/effects'
 import * as actions from './actions'
 import * as api from './api';
 
@@ -46,7 +46,7 @@ export function* watchRangeKeys() {
 
 export function* watchAndLog() {
   yield takeEvery('*', function* logger(action) {
-    console.log('action', action)
+    yield console.log('action', action)
   })
 }
 
