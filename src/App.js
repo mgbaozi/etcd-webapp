@@ -13,6 +13,7 @@ class App extends Component {
           <div className="container">
             <Route exact path="/" component={null}/>
             <Route exact path="/kv" component={KeyValue}/>
+            <Route exact path="/kv/*" component={KeyValue}/>
             <Route exact path="/member" component={null}/>
           </div>
         </div>

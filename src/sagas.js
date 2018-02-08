@@ -16,16 +16,29 @@ function* fetchEntity(entity, apiFn, id, url) {
     yield put( entity.failure(error, id) )
 }
 
-export const fetchKeys = fetchEntity.bind(null, actions.keys, api.rangeKeys)
+export const fetchKeys = fetchEntity.bind(null, actions.keys, api.fetchKeys)
 
+export const fetchKey = fetchEntity.bind(null, actions.kv, api.fetchKey)
+
+export function* getKey(key) {
+  console.log(key)
+  yield call(fetchKey, key)
+}
 
 export function* rangeKeys(prefix) {
   yield call(fetchKeys, prefix)
 }
 
+export function* watchGetKey() {
+  yield takeEvery(actions.FETCH_KEY, function* get(action) {
+    const { key } = action
+    console.log(key)
+    yield fork(getKey, key)
+  })
+}
+
 export function* watchRangeKeys() {
-  yield takeEvery(actions.FETCH_KEYS, function* x(action) {
-    console.log(action)
+  yield takeEvery(actions.FETCH_KEYS, function* range(action) {
     const { prefix } = action
     yield fork(rangeKeys, prefix)
   })
@@ -39,6 +52,7 @@ export function* watchAndLog() {
 
 function* sagas() {
   yield all([
+    fork(watchGetKey),
     fork(watchRangeKeys),
     fork(watchAndLog),
   ])

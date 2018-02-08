@@ -1,16 +1,17 @@
-import { encode, getPrefixRangeEnd } from './lib/key'
+import { encode, decode, getPrefixRangeEnd } from './lib/key'
 
 const API_PREFIX = '/v3alpha'
 
 function callAPI(endpoint, query) {
   const url = `${API_PREFIX}${endpoint}`
   const fetchOption = {
+    method: 'post',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(query),
   }
-  fetchOption.method = 'post'
-  fetchOption.headers = {}
-  fetchOption.headers.Accept = 'application/json'
-  fetchOption.headers['Content-Type'] = 'application/json'
-  fetchOption.body = JSON.stringify(query)
 
   fetchOption.headers = new Headers(fetchOption.headers)
 
@@ -29,9 +30,33 @@ function callAPI(endpoint, query) {
     )
 }
 
-export const fetchKeys = () => callAPI('/kv/range', { key: 'AA==', range_end: 'AA==', keys_only: true , limit: 100})
+export const fetchKeys = prefix => {
+  return callAPI('/kv/range', {
+    key: encode(prefix),
+    range_end: encode(getPrefixRangeEnd(prefix)),
+    keys_only: true ,
+    limit: 50000,
+  }).then(
+    action => {
+      if (action.response) {
+        action.response.kvs = action.response.kvs.map(item => decode(item.key))
+      }
+      return action
+    }
+  )
+}
 
-export const rangeKeys = prefix => {
-  console.log(prefix)
-  return callAPI('/kv/range', { key: encode(prefix), range_end: encode(getPrefixRangeEnd(prefix)), keys_only: true , limit: 100})
+export const fetchKey = key => {
+  return callAPI('/kv/range', {
+    key: encode(key),
+  }).then(
+    action => {
+      if (action.response) {
+        const { key, value } = action.response.kvs[0]
+        action.response.kvs[0].key = decode(key)
+        action.response.kvs[0].value = decode(value)
+      }
+      return action
+    }
+  )
 }

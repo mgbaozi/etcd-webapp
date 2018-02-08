@@ -10,8 +10,10 @@ function createRequestTypes(base) {
 }
 
 export const KEYS = createRequestTypes('KEYS')
+export const KV = createRequestTypes('KV')
 
 export const FETCH_KEYS = 'FETCH_KEYS'
+export const FETCH_KEY = 'FETCH_KEY'
 
 function action(type, payload = {}) {
   return {type, ...payload}
@@ -24,3 +26,11 @@ export const keys = {
 }
 
 export const fetchKeys = prefix => action(FETCH_KEYS, { prefix })
+
+export const kv = {
+  request: key => action(KV.REQUEST, { key }),
+  success: response => action(KV.SUCCESS, { response }),
+  failure: error => action(KV.FAILURE, { error }),
+}
+
+export const fetchKey = key => action(FETCH_KEY, { key })

@@ -13,8 +13,8 @@ export function decode(key) {
 }
 
 export function getPrefixRangeEnd(prefix) {
-  const splited = prefix.split('')
-  for (var i = splited.length - 1; i >= 0; i--) {
+  const splited = prefix ? prefix.split('') : []
+  for (let i = splited.length - 1; i >= 0; i--) {
     let code = prefix.charCodeAt(i)
     if (code < 0xff) {
       splited[i] = String.fromCharCode(code+1)
