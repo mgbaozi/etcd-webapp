@@ -5,6 +5,7 @@ import KeyValue from './containers/KeyValue'
 import Member from './containers/Member'
 import './App.css'
 
+
 class App extends Component {
   render() {
     return (
@@ -12,10 +13,10 @@ class App extends Component {
         <div className="app">
           <AppNav />
           <div className="container">
-            <Route exact path="/" component={Member}/>
-            <Route exact path="/kv" component={KeyValue}/>
-            <Route exact path="/kv/*" component={KeyValue}/>
-            <Route exact path="/member" component={Member}/>
+            <Route exact path="/" component={null}/>
+            <Route path="/kv" component={KeyValue}/>
+            <Route path="/kv/*" component={KeyValue}/>
+            <Route path="/member" component={Member}/>
           </div>
         </div>
       </Router>

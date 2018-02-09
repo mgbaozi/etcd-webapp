@@ -9,7 +9,6 @@ import { fetchMembers, fetchMemberStatus } from '../actions'
 class Member extends Component {
 
   static propTypes = {
-    match: PropTypes.object,
     fetchMembers: PropTypes.func.isRequired,
     fetchMemberStatus: PropTypes.func.isRequired,
     members: PropTypes.object.isRequired,
