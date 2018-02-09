@@ -11,9 +11,14 @@ function createRequestTypes(base) {
 
 export const KEYS = createRequestTypes('KEYS')
 export const KV = createRequestTypes('KV')
+export const MEMBERS = createRequestTypes('MEMBERS')
+export const STATUS = createRequestTypes('STATUS')
 
 export const FETCH_KEYS = 'FETCH_KEYS'
 export const FETCH_KEY = 'FETCH_KEY'
+
+export const FETCH_MEMBERS = 'FETCH_MEMBERS'
+export const FETCH_MEMBER_STATUS = 'FETCH_MEMBER_STATUS'
 
 function action(type, payload = {}) {
   return {type, ...payload}
@@ -34,3 +39,19 @@ export const kv = {
 }
 
 export const fetchKey = key => action(FETCH_KEY, { key })
+
+export const members = {
+  request: () => action(MEMBERS.REQUEST, {}),
+  success: response => action(MEMBERS.SUCCESS, { response }),
+  failure: error => action(MEMBERS.FAILURE, { error }),
+}
+
+export const fetchMembers = () => action(FETCH_MEMBERS, {})
+
+export const status = {
+  request: id => action(STATUS.REQUEST, { id }),
+  success: response => action(STATUS.SUCCESS, { response }),
+  failure: error => action(STATUS.FAILURE, { error }),
+}
+
+export const fetchMemberStatus = id => action(FETCH_MEMBER_STATUS, { id })

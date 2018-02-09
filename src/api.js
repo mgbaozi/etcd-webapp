@@ -60,3 +60,7 @@ export const fetchKey = key => {
     }
   )
 }
+
+export const fetchMembers = () => callAPI('/cluster/member/list', {})
+
+export const fetchMemberStatus = id => callAPI('/maintenance/status', { ID: id })

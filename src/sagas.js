@@ -17,11 +17,12 @@ function* fetchEntity(entity, apiFn, id, url) {
 }
 
 export const fetchKeys = fetchEntity.bind(null, actions.keys, api.fetchKeys)
-
 export const fetchKey = fetchEntity.bind(null, actions.kv, api.fetchKey)
 
+export const fetchMembers = fetchEntity.bind(null, actions.members, api.fetchMembers)
+export const fetchMemberStatus = fetchEntity.bind(null, actions.status, api.fetchMemberStatus)
+
 export function* getKey(key) {
-  console.log(key)
   yield call(fetchKey, key)
 }
 
@@ -29,10 +30,17 @@ export function* rangeKeys(prefix) {
   yield call(fetchKeys, prefix)
 }
 
+export function* getMembers() {
+  yield call(fetchMembers)
+}
+
+export function* getMemberStatus(id) {
+  yield call(fetchMemberStatus, id)
+}
+
 export function* watchGetKey() {
   yield takeEvery(actions.FETCH_KEY, function* get(action) {
     const { key } = action
-    console.log(key)
     yield fork(getKey, key)
   })
 }
@@ -41,6 +49,19 @@ export function* watchRangeKeys() {
   yield takeEvery(actions.FETCH_KEYS, function* range(action) {
     const { prefix } = action
     yield fork(rangeKeys, prefix)
+  })
+}
+
+export function* watchGetMembers() {
+  yield takeEvery(actions.FETCH_MEMBERS, function* get(action) {
+    yield fork(getMembers)
+  })
+}
+
+export function* watchGetMembersSuccess(id) {
+  yield takeEvery(actions.MEMBERS.SUCCESS, function* get(action) {
+    const members = action.response.members
+    yield members.map(member => fork(getMemberStatus, member.ID))
   })
 }
 
@@ -54,6 +75,8 @@ function* sagas() {
   yield all([
     fork(watchGetKey),
     fork(watchRangeKeys),
+    fork(watchGetMembers),
+    fork(watchGetMembersSuccess),
     fork(watchAndLog),
   ])
 }
