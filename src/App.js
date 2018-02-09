@@ -14,8 +14,8 @@ class App extends Component {
           <AppNav />
           <div className="container">
             <Route exact path="/" component={null}/>
-            <Route path="/kv" component={KeyValue}/>
-            <Route path="/kv/*" component={KeyValue}/>
+            <Route exact path="/kv" component={KeyValue}/>
+            <Route exact path="/kv/*" component={KeyValue}/>
             <Route path="/member" component={Member}/>
           </div>
         </div>
