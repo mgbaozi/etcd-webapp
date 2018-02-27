@@ -28,7 +28,6 @@ class KeyValue extends Component {
     const { match } = this.props
     const { match: nextMatch } = nextProps
     if (match.params[0] !== nextMatch.params[0]) {
-      // this.props.fetchKeys()
       if (this.showValue(nextProps)) {
         this.props.fetchKey(nextMatch.params[0])
       }
@@ -99,9 +98,12 @@ class KeyValue extends Component {
       <Grid>
         <Row>
           <Col md={6}>
-            <Breadcrumb>
-              {breadcrumbItems}
-            </Breadcrumb>
+            { dir.length ? (
+              <Breadcrumb>
+                {breadcrumbItems}
+              </Breadcrumb>
+            ): null
+            }
             <ListGroup>{keyListItems}</ListGroup>
           </Col>
           {showValue ? (
