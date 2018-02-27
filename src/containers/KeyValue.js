@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Grid, Row, Col } from 'react-bootstrap'
-import { ListGroup, ListGroupItem } from 'react-bootstrap'
+import { ListGroup, ListGroupItem, Breadcrumb } from 'react-bootstrap'
 import { fetchKey, fetchKeys } from '../actions'
 
 class KeyValue extends Component {
@@ -82,10 +82,26 @@ class KeyValue extends Component {
         </LinkContainer>
       )
     }).toArray()
+    const breadcrumbItems = dir.map((item, index) => {
+      const link = dir.slice(0, index+1).join('')
+      return (
+        <LinkContainer
+          key={`breadcrumb-${index}`}
+          to={`/kv/${link}`}>
+          <Breadcrumb.Item
+          >
+            {item.substr(0, item.length-1)}
+          </Breadcrumb.Item>
+        </LinkContainer>
+      )
+    })
     return (
       <Grid>
         <Row>
           <Col md={6}>
+            <Breadcrumb>
+              {breadcrumbItems}
+            </Breadcrumb>
             <ListGroup>{keyListItems}</ListGroup>
           </Col>
           {showValue ? (
