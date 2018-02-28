@@ -85,11 +85,11 @@ class KeyValue extends Component {
       const link = dir.slice(0, index+1).join('')
       return (
         <LinkContainer
-          key={`breadcrumb-${index}`}
+          key={`breadcrumb-${link}`}
           to={`/kv/${link}`}>
           <Breadcrumb.Item
           >
-            {item.substr(0, item.length-1)}
+            {item.length > 1 ? item.substr(0, item.length-1) : item}
           </Breadcrumb.Item>
         </LinkContainer>
       )
@@ -100,6 +100,14 @@ class KeyValue extends Component {
           <Col md={6}>
             { dir.length ? (
               <Breadcrumb>
+                <LinkContainer
+                  key={`breadcrumb--home`}
+                  to={`/kv`}>
+                  <Breadcrumb.Item
+                  >
+                    HOME
+                  </Breadcrumb.Item>
+                </LinkContainer>
                 {breadcrumbItems}
               </Breadcrumb>
             ): null
