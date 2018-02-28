@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Grid, Row, Col } from 'react-bootstrap'
+import { Panel } from 'react-bootstrap'
 import { ListGroup, ListGroupItem, Breadcrumb } from 'react-bootstrap'
 import { fetchKey, fetchKeys } from '../actions'
 
@@ -116,7 +117,12 @@ class KeyValue extends Component {
           </Col>
           {showValue ? (
             <Col md={6}>
-              <p>{keys.getIn(['kvs', this.getKey()])}</p>
+              <Panel>
+                <Panel.Heading>Value</Panel.Heading>
+                <Panel.Body>
+                  {keys.getIn(['kvs', this.getKey()])}
+                </Panel.Body>
+              </Panel>
             </Col>
           ) : null
           }
