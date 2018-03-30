@@ -1,11 +1,33 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
+import PropTypes from 'prop-types'
 
 import { Link } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 
 export default class AppNav extends Component {
+  
+  static propTypes = {
+    clusters: PropTypes.object,
+    current: PropTypes.string,
+    pathname: PropTypes.string,
+  }
+
   render() {
+    const { clusters, current, pathname } = this.props
+    const menuItems = clusters.map(cluster => {
+      const name = cluster.get('name')
+      return (
+        <LinkContainer
+          key={`cluster-${name}`}
+          to={`${pathname}?cluster=${name}`}>
+          <MenuItem
+          >
+            {name}
+          </MenuItem>
+        </LinkContainer>
+      )
+    })
     return (
       <Navbar>
         <Navbar.Header>
@@ -23,6 +45,9 @@ export default class AppNav extends Component {
           <LinkContainer to="/snapshot">
             <NavItem>Snapshot</NavItem>
           </LinkContainer>
+          <NavDropdown title={current} id="app-nav-cluster-selector">
+            {menuItems}
+          </NavDropdown>
         </Nav>
       </Navbar>
     )

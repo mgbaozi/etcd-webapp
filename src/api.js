@@ -115,3 +115,5 @@ export const fetchMembers = () => callEtcdAPI('/cluster/member/list', {})
 export const fetchMemberStatus = id => callEtcdAPI('/maintenance/status', { ID: id })
 
 export const fetchSnapshots = cluster => callAPI('get', '/snapshots', {})
+
+export const fetchClusters = () => callAPI('get', '/clusters', {})
