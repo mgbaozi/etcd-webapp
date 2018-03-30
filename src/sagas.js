@@ -22,6 +22,8 @@ export const fetchKey = fetchEntity.bind(null, actions.kv, api.fetchKey)
 export const fetchMembers = fetchEntity.bind(null, actions.members, api.fetchMembers)
 export const fetchMemberStatus = fetchEntity.bind(null, actions.status, api.fetchMemberStatus)
 
+export const fetchSnapshots = fetchEntity.bind(null, actions.snapshots, api.fetchSnapshots)
+
 export function* getKey(key) {
   yield call(fetchKey, key)
 }
@@ -36,6 +38,10 @@ export function* getMembers() {
 
 export function* getMemberStatus(id) {
   yield call(fetchMemberStatus, id)
+}
+
+export function* listSnapshots(cluster) {
+  yield call(fetchSnapshots, cluster)
 }
 
 export function* watchGetKey() {
@@ -58,6 +64,13 @@ export function* watchGetMembers() {
   })
 }
 
+export function* watchListSnapshots() {
+  yield takeEvery(actions.FETCH_SNAPSHOTS, function* range(action) {
+    const { cluster } = action
+    yield fork(fetchSnapshots, cluster)
+  })
+}
+
 export function* watchGetMembersSuccess(id) {
   yield takeEvery(actions.MEMBERS.SUCCESS, function* get(action) {
     const members = action.response.members
@@ -77,6 +90,7 @@ function* sagas() {
     fork(watchRangeKeys),
     fork(watchGetMembers),
     fork(watchGetMembersSuccess),
+    fork(watchListSnapshots),
     fork(watchAndLog),
   ])
 }

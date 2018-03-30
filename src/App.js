@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import AppNav from './components/AppNav'
 import KeyValue from './containers/KeyValue'
 import Member from './containers/Member'
+import Snapshot from './containers/Snapshot'
 import './App.css'
 
 
@@ -19,6 +20,7 @@ class App extends Component {
             <Route exact path="/kv" component={KeyValue}/>
             <Route exact path="/kv/*" component={KeyValue}/>
             <Route path="/member" component={Member}/>
+            <Route path="/snapshot" component={Snapshot}/>
           </div>
         </div>
       </Router>

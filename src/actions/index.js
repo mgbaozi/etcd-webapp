@@ -12,6 +12,7 @@ function createRequestTypes(base) {
 export const KEYS = createRequestTypes('KEYS')
 export const KV = createRequestTypes('KV')
 export const MEMBERS = createRequestTypes('MEMBERS')
+export const SNAPSHOTS= createRequestTypes('SNAPSHOTS')
 export const STATUS = createRequestTypes('STATUS')
 
 export const FETCH_KEYS = 'FETCH_KEYS'
@@ -19,6 +20,8 @@ export const FETCH_KEY = 'FETCH_KEY'
 
 export const FETCH_MEMBERS = 'FETCH_MEMBERS'
 export const FETCH_MEMBER_STATUS = 'FETCH_MEMBER_STATUS'
+
+export const FETCH_SNAPSHOTS = 'FETCH_SNAPSHOTS'
 
 function action(type, payload = {}) {
   return {type, ...payload}
@@ -55,3 +58,11 @@ export const status = {
 }
 
 export const fetchMemberStatus = id => action(FETCH_MEMBER_STATUS, { id })
+
+export const snapshots = {
+  request: cluster => action(SNAPSHOTS.REQUEST, {}),
+  success: response => action(SNAPSHOTS.SUCCESS, { response }),
+  failure: error => action(SNAPSHOTS.FAILURE, { error }),
+}
+
+export const fetchSnapshots = () => action(FETCH_SNAPSHOTS, {})

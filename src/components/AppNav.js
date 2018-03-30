@@ -20,6 +20,9 @@ export default class AppNav extends Component {
           <LinkContainer to="/member">
             <NavItem>Member</NavItem>
           </LinkContainer>
+          <LinkContainer to="/snapshot">
+            <NavItem>Snapshot</NavItem>
+          </LinkContainer>
         </Nav>
       </Navbar>
     )
